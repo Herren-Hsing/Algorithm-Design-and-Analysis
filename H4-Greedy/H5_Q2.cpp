@@ -21,6 +21,8 @@ int main()
 	for (int i = 0; i < e; i++)
 	{
 		cin >> n1 >> n2 >> len;
+		if (graph[n1 - 1][n2 - 1] != 0 && len >= graph[n1 - 1][n2 - 1])
+			continue;
 		graph[n1 - 1][n2 - 1] = len;
 	}
 	int *distances = new int[n]; // distance用来存放起点到i点的最短距离

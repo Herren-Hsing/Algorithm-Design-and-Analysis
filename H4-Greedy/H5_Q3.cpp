@@ -21,6 +21,8 @@ int main()
 	for (int i = 0; i < e; i++)
 	{
 		cin >> n1 >> n2 >> len;
+		if (graph[n1 - 1][n2 - 1] != 0 && len >= graph[n1 - 1][n2 - 1])
+			continue;
 		graph[n1 - 1][n2 - 1] = len;
 		graph[n2 - 1][n1 - 1] = len;
 	}
@@ -69,6 +71,11 @@ int main()
 		}
 		picked[picked_node] = true;
 		picked_num++;
+		if (distances[picked_node] == 0) // 图不联通，不存在最小生成树
+		{
+			sum = 0;
+			break;
+		}
 		sum += distances[picked_node];
 		for (int i = 0; i < n; i++)
 		{
@@ -76,7 +83,7 @@ int main()
 			{
 				if (!graph[picked_node][i]) // 如果刚加入的点到该点无路径，不用更新
 					continue;
-				if (graph[picked_node][i] < distances[i] || !distances[i]) // 如果新加入点到该点距离小或者原本集合的点到该点无路径，更新该点到集合的点的最短距离
+				if ((graph[picked_node][i] < distances[i]) || (!distances[i])) // 如果新加入点到该点距离小或者原本集合的点到该点无路径，更新该点到集合的点的最短距离
 				{
 					distances[i] = graph[picked_node][i];
 				}
